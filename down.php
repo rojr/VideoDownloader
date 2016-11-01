@@ -10,14 +10,14 @@ if (isset($_POST['url']) && isset($_POST['i'])) {
             mkdir($path, 0777);
         }
 
-        if (!is_dir($path . '/../logs/')) {
-            mkdir($path . '/../logs/', 0777);
+        if (!is_dir($path . './logs/')) {
+            mkdir($path . './logs/', 0777);
         }
         
         chmod($path, 0777);
 
-        exec('youtube-dl -i -x --audio-format "m4a" -o \'/var/www/youtube/dl/' . escapeshellarg($id) . '/%(title)s.%(ext)s\' ' . escapeshellarg($url) . ' > logs/' . escapeshellarg($id) . '.txt');
-        $res->url = '/youtube/link.php?id=' . $id;
+        exec('youtube-dl -i -x --audio-format "m4a" -o \'./dl/' . escapeshellarg($id) . '/%(title)s.%(ext)s\' ' . escapeshellarg($url) . ' > logs/' . escapeshellarg($id) . '.txt');
+        $res->url = '/link.php?id=' . $id;
 
     } else {
         $res->error = 'This is not a valid url... try again.';

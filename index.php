@@ -60,7 +60,7 @@
                 function loop() {
                     $.ajax({
                         method: 'POST',
-                        url: '/youtube/pool.php?id=' + rand
+                        url: '/pool.php?id=' + rand
                     }).done(function (res) {
                         if (!sup.done) {
                             log.html(res);
@@ -76,7 +76,7 @@
                 loop();
                 $.ajax({
                     method: "POST",
-                    url: "/youtube/down.php",
+                    url: "/down.php",
                     data: {
                         url: value,
                         i: rand
