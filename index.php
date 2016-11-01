@@ -89,7 +89,7 @@
                     }
                     else {
                         log.html('<h3>Download completed!</h3>');
-                        log.append('<a href="' + done.url + '">Click here to Download your audio</a>');
+                        log.append('<h1><a href="' + done.url + '">Click here to Download your audio</a></h1>');
                     }
                 });
                 event.preventDefault();
