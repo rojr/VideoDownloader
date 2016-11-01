@@ -16,7 +16,7 @@ if (isset($_POST['url']) && isset($_POST['i'])) {
         
         chmod($path, 0777);
 
-        exec('youtube-dl -i -x --audio-format "m4a" -o \'./dl/' . escapeshellarg($id) . '/%(title)s.%(ext)s\' ' . escapeshellarg($url) . ' > logs/' . escapeshellarg($id) . '.txt');
+        exec('youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 -o \'./dl/' . escapeshellarg($id) . '/%(title)s.%(ext)s\' ' . escapeshellarg($url) . ' > logs/' . escapeshellarg($id) . '.txt');
         $res->url = '/link.php?id=' . $id;
 
     } else {
