@@ -22,7 +22,6 @@ if (isset($_GET['id']) && isValidMd5($_GET['id'])) {
             serveFile('./dl/' . $id . '/' . $name);
         } else {
             exec('cd dl; zip -9 -r ' . $id . '.zip ' . $id);
-            //print 'zip -9 -r ' . $id . '.zip ./dl/' . $id;
             serveFile('./dl/' . $id . '.zip');
         }
     } else {
