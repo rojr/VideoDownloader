@@ -15,12 +15,11 @@ if (isset($_POST['url']) && isset($_POST['i'])) {
         if (!is_dir($path . './logs/')) {
             mkdir($path . './logs/', 0777);
         }
-        
+
         chmod($path, 0777);
 
-        exec('youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 -o \'./dl/' . escapeshellarg($id) . '/%(title)s.%(ext)s\' ' . escapeshellarg($url) . ' > logs/' . escapeshellarg($id) . '.txt');
+        exec('youtube-dl -i -x --audio-format mp3 -o \'./dl/' . escapeshellarg($id) . '/%(title)s.%(ext)s\' ' . escapeshellarg($url) . ' > logs/' . escapeshellarg($id) . '.txt');
         $res->url = '/link.php?id=' . $id;
-
     } else if (preg_match('/^((http(s|):\/\/)(www\.|)techno\-livesets\.com).+/', $url)) {
 
         $html = str_get_html(getData($url, $url));
