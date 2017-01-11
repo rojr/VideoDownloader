@@ -2,10 +2,10 @@
 include_once('./simple_html_dom.php');
 
 $res = new stdClass();
-if (isset($_POST['url']) && isset($_POST['i'])) {
-    $url = str_replace('\/', '', $_POST['url']);
+if (isset($_REQUEST['url']) && isset($_REQUEST['i'])) {
+    $url = str_replace('\/', '', $_REQUEST['url']);
     if (preg_match('/(http(s|):\/\/)(www\.|)((((youtube|vimeo)\.com)|(youtu\.be)|(soundcloud.com))\/(([0-9]+)|(watch.+)|([A-z]|[0-9]|\/|\-)+))/', $url)) {
-        $id = md5($_POST['i']);
+        $id = md5($_REQUEST['i']);
         $path = './dl/' . $id;
 
         if (!is_dir($path)) {
