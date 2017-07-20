@@ -9,11 +9,11 @@ if (isset($_REQUEST['url']) && isset($_REQUEST['i'])) {
         $path = './dl/' . $id;
 
         if (!is_dir($path)) {
-            mkdir($path, 0777);
+            mkdir($path, 0777, true);
         }
 
-        if (!is_dir($path . './logs/')) {
-            mkdir($path . './logs/', 0777);
+        if (!is_dir('logs/')) {
+            mkdir('logs/', 0777, true);
         }
 
         chmod($path, 0777);

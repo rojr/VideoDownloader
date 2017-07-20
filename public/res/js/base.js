@@ -12,10 +12,14 @@ $(document).ready(function () {
 
 		function loop() {
 			$.ajax({
-				method: 'POST',
+				method: 'GET',
 				url: '/pool.php?id=' + rand
 			}).done(function (res) {
 				if (!sup.done) {
+					var match = new RegExp(/[0-9]+\%/g);
+					match.test(res);
+					var percents = RegExp.lastMatch;
+					console.log(percents);
 					log.html(res);
 					log.scrollTop(log[0].scrollHeight);
 					loop();
