@@ -59,11 +59,10 @@ if (isset($_REQUEST['url']) && isset($_REQUEST['i'])) {
                 if (isset($asset->image_url) && $asset->image_url) {
                     try {
                         fwrite($file, 'Downloading image...' . "\n");
-                        fwrite($file, $asset->image_url . "\n");
                         $image = file_get_contents($asset->image_url);
 
                         fwrite($file, 'Downloaded' . "\n");
-                        $title = str_replace(['{', '}', '/', '"'], '_', $datum->title);
+                        $title = str_replace(['{', '}', '/', '"', ' '], '_', $datum->title);
                         $imagePath = "./dl/{$id}/{$title}_{$asset->id}";
                         file_put_contents($imagePath, $image);
                         fwrite($file, 'Saving to disk.' . "\n");
@@ -83,7 +82,7 @@ if (isset($_REQUEST['url']) && isset($_REQUEST['i'])) {
 
                             if ($extention) {
                                 rename($imagePath, $imagePath . $extention);
-                                fwrite($file, 'Done' . "\n");
+                                fwrite($file, 'Done...' . "\n");
                             }
                         }
                     } catch (Exception $exception) {
