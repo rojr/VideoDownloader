@@ -63,7 +63,7 @@ if (isset($_REQUEST['url']) && isset($_REQUEST['i'])) {
 
                         fwrite($file, 'Downloaded' . "\n");
                         $title = str_replace(['{', '}', '/', '"', ' '], '_', $datum->title);
-                        $imagePath = "./dl/{$id}/{$title}_{$asset->id}";
+                        $imagePath = "dl/{$id}/{$title}_{$asset->id}";
                         file_put_contents($imagePath, $image);
                         fwrite($file, 'Saving to disk.' . "\n");
 
