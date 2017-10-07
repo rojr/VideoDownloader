@@ -1,5 +1,7 @@
 <?php
 include_once('./simple_html_dom.php');
+ini_set('max_execution_time', 0);
+ini_set('memory_limit', '2058M');
 
 $res = new stdClass();
 if (isset($_REQUEST['url']) && isset($_REQUEST['i'])) {
@@ -32,6 +34,65 @@ if (isset($_REQUEST['url']) && isset($_REQUEST['i'])) {
         if ($technoLivesetsData) {
             $res->url = $technoLivesetsData[0]->mp3;
         }
+    } else if (preg_match('/(artstation\/).+/', $url)) {
+        $user = str_replace('artstation/', '', $url);
+        $aj = json_decode(getData("https://www.artstation.com/users/{$user}/projects.json", $url));
+
+        $id = md5($_REQUEST['i']);
+        $path = './dl/' . $id;
+
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        if (!is_dir('logs/')) {
+            mkdir('logs/', 0777, true);
+        }
+        chmod($path, 0777);
+
+        $file = fopen('logs/' . $id . '.txt', 'x');
+        foreach ($aj->data as $datum) {
+            fwrite($file, '<b>New Project: ' . $datum->title . '</b>' . "\n");
+            fwrite($file, 'Pulling item data' . "\n");
+            $projectData = json_decode(getData("https://www.artstation.com/projects/{$datum->slug}.json", 'www.google.com'));
+            foreach ($projectData->assets as $asset) {
+                if (isset($asset->image_url) && $asset->image_url) {
+                    try {
+                        fwrite($file, 'Downloading image...' . "\n");
+                        fwrite($file, $asset->image_url . "\n");
+                        $image = file_get_contents($asset->image_url);
+
+                        fwrite($file, 'Downloaded' . "\n");
+                        $title = str_replace(['{', '}', '/', '"'], '_', $datum->title);
+                        $imagePath = "./dl/{$id}/{$title}_{$asset->id}";
+                        file_put_contents($imagePath, $image);
+                        fwrite($file, 'Saving to disk.' . "\n");
+
+                        if (file_exists($imagePath)) {
+                            $exifType = exif_imagetype($imagePath);
+                            $extention = '';
+                            if ($exifType == IMAGETYPE_JPEG) {
+                                $extention = '.jpg';
+                            } else if ($exifType == IMAGETYPE_PNG) {
+                                $extention = '.png';
+                            } else if ($exifType == IMAGETYPE_BMP) {
+                                $extention = '.bmp';
+                            } else if ($exifType == IMAGETYPE_GIF) {
+                                $extention = '.gif';
+                            }
+
+                            if ($extention) {
+                                rename($imagePath, $imagePath . $extention);
+                                fwrite($file, 'Done' . "\n");
+                            }
+                        }
+                    } catch (Exception $exception) {
+                    }
+                }
+            }
+        }
+
+        $res->url = '/link.php?id=' . $id;
     } else {
         $res->error = 'This is not a valid url... try again.';
     }

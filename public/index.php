@@ -2,7 +2,7 @@
 ?>
 <html>
 <head>
-    <title>Download youtube/soundcloud links as audio files.</title>
+    <title>Downloader for loads of sites</title>
     <link rel="stylesheet" href="res/css/screen.css">
     <script src="//code.jquery.com/jquery-2.2.3.min.js"></script>
     <script src="res/js/base.js"></script>

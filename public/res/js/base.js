@@ -22,7 +22,7 @@ $(document).ready(function () {
 					console.log(percents);
 					log.html(res);
 					log.scrollTop(log[0].scrollHeight);
-					loop();
+					setTimeout(loop, 100);
 				}
 			});
 		}
